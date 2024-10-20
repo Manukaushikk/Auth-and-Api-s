@@ -2,21 +2,21 @@
 import { Navigate } from "react-router-dom";
 
 const PrivateRoute = ({ children }) => {
-    // Check conditions to access private routes
+    // Check if the user is authenticated and if email is available
     const isAuthenticated = localStorage.getItem("otp") !== null;
     const isEmailStored = sessionStorage.getItem("email") !== null;
 
-    // If OTP is stored in localStorage, block access to private routes
+    // Redirect to sign-in if OTP is stored
     if (isAuthenticated) {
         return <Navigate to="/signin" replace />;
     }
 
-    // If email is not stored in sessionStorage, redirect to Unauthorized page
+    // Redirect to Unauthorized if email is not stored
     if (!isEmailStored) {
         return <Navigate to="/unauthorized" replace />;
     }
 
-    // If all conditions are satisfied, allow access to private routes
+    // Otherwise, allow access to private routes
     return children;
 };
 
